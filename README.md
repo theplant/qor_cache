@@ -23,6 +23,7 @@ SAMPLE:
 
 
   app/models/xxx.rb
+
      cache_class_method :aaa
      cache_method :bbb, 'product'
      cache_field :product_code, :from => [:color_variation, :product, :code]
