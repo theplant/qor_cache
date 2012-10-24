@@ -1,5 +1,7 @@
 require "qor_cache/version"
+require "qor_cache/configuration"
 
-module QorCache
-  # Your code goes here...
+module Qor
+  module Cache
+  end
 end

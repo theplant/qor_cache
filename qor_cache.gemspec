@@ -5,7 +5,7 @@ require 'qor_cache/version'
 
 Gem::Specification.new do |gem|
   gem.name          = "qor_cache"
-  gem.version       = QorCache::VERSION
+  gem.version       = Qor::Cache::VERSION
   gem.authors       = ["Jinzhu"]
   gem.email         = ["wosmvp@gmail.com"]
   gem.description   = %q{Qor Cache}

@@ -1,3 +1,5 @@
-module QorCache
-  VERSION = "0.0.1"
+module Qor
+  module Cache
+    VERSION = "0.0.1"
+  end
 end
