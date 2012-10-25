@@ -19,4 +19,6 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency "qor_test"
   gem.add_dependency "qor_dsl"
+  gem.add_dependency "rails"
+  gem.add_development_dependency "sqlite3"
 end
