@@ -1,3 +1,15 @@
+cache_key :product do
+  Product
+end
+
+cache_key :color_variation do
+  [ColorVariation]
+end
+
+cache_key :product_and_color_variation do
+  [Product, ColorVariation]
+end
+
 scope :product do
   cache_method :slow_method
   cache_method :slow_method_with_args
