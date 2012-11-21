@@ -1,6 +1,11 @@
 Qor Cache
 =========
 
+[![Build Status](https://secure.travis-ci.org/qor/qor_cache.png?branch=master)][travis]
+[![Code Climate](https://codeclimate.com/badge.png)][codeclimate]
+[travis]: http://travis-ci.org/qor/qor_cache
+[codeclimate]: https://codeclimate.com/github/qor/qor_cache
+
 ## Usage
 
     # config/qor/cache.rb
