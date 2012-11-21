@@ -1,6 +1,7 @@
 require "qor_cache/configuration"
 require "qor_cache/active_record"
 require "qor_cache/railtie"
+require "digest/md5"
 
 module Qor
   module Cache
@@ -21,9 +22,9 @@ module Qor
               alias_method original_method, method
 
               define_method(method) do |*args|
-                _cache_key = [method, cache_key].map(&:to_s).join("-")
+                _cache_key = [method, cache_key, args.map(&:inspect).join("-")].map(&:to_s).join("-")
 
-                Qor::Cache::Base.cache_store.fetch(_cache_key) do
+                Qor::Cache::Base.cache_store.fetch(Digest::MD5.hexdigest(_cache_key)) do
                   self.send(original_method, *args)
                 end
               end
@@ -45,9 +46,9 @@ module Qor
               end
 
               def self.#{method}(*args)
-                _cache_key = [:#{method}, cache_key].map(&:to_s).join("-")
+                _cache_key = [:#{method}, cache_key, args.map(&:inspect).join("-")].map(&:to_s).join("-")
 
-                Qor::Cache::Base.cache_store.fetch(_cache_key) do
+                Qor::Cache::Base.cache_store.fetch(Digest::MD5.hexdigest(_cache_key)) do
                   self.send(:#{original_method}, *args)
                 end
               end
