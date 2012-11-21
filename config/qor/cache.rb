@@ -20,6 +20,11 @@ end
 
 scope :color_variation do
   cache_method :slow_method, 'product'
+
+  cache_method :slow_method_with_product do |s|
+    s.product
+  end
+
   cache_class_method :slow_class_method, 'product'
 
   cache_field :product_code, :from => [:product, :code]

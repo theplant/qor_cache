@@ -1,37 +1,40 @@
 Qor Cache
 =========
 
-SAMPLE:
+Usage:
 
-  config/qor/cache.rb
-
-    enabled_environments ['production']
-
+    # config/qor/cache.rb
     cache_key "product" do
       [Product, Collection]
     end
 
     cache_key "current_season" do
-      [Season.current]
+      Season.current
     end
 
-    scope :size_variation do
-      cache_class_method :aaa
-      cache_method :bbb, 'product'
-      cache_field :product_code, :from => [:color_variation, :product, :code]
+    scope :color_variation do
+      cache_method :heavy_method_related_to_product do |s|
+        s.product
+      end
+
+      cache_class_method :heavy_method
+      cache_class_method :heavy_method_related_to_current_season, 'current_season'
+
+      cache_field :product_code, :from => [:product, :code]
     end
 
 
-  app/models/xxx.rb
-
-     cache_class_method :aaa
-     cache_method :bbb, 'product'
-     cache_field :product_code, :from => [:color_variation, :product, :code]
-
-     def self.aaa
+     # app/models/color_variation.rb
+     def self.heavy_method
+       self.all.map {|x| x.id}.sum
      end
 
-     def bbb
+     def self.heavy_method_related_to_current_season
+       where(:season_id => Season.current.id).map {|x| x.id}.sum
+     end
+
+     def heavy_method_related_to_product
+       product.size_variations.map(&:id).sum
      end
 
   app/views/xxx.html.erb

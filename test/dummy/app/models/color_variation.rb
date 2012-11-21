@@ -6,6 +6,10 @@ class ColorVariation < ActiveRecord::Base
     Product.order("updated_at").first.updated_at
   end
 
+  def slow_method_with_product
+    product.updated_at
+  end
+
   def self.slow_class_method
     "#{Product.order("updated_at").first.updated_at}#{rand}"
   end
