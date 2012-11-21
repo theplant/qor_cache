@@ -1,7 +1,7 @@
 require 'test_helper'
 require 'timeout'
 
-class QorCacheTest < ActiveSupport::TestCase
+class QorCacheMethodsTest < ActiveSupport::TestCase
   test "instance method should be cached" do
     product = FactoryGirl.create(:product)
 
