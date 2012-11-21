@@ -6,6 +6,9 @@ module Qor
         base.send :include, InstanceMethods
         base.after_save :_qor_cache_expire
         base.after_destroy :_qor_cache_expire
+
+        base.before_validation :_qor_cache_sync_cached_fields
+        base.after_save :_qor_cache_sync_qor_cache_fields
       end
     end
 
@@ -32,6 +35,13 @@ module Qor
     module InstanceMethods
       def _qor_cache_expire
         self.class._qor_cache_expire
+      end
+
+      def _qor_cache_sync_cached_fields
+        Qor::Cache::Configuration.deep_find(:cache_field)
+      end
+
+      def _qor_cache_sync_qor_cache_fields
       end
     end
   end
