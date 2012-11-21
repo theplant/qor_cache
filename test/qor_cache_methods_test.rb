@@ -13,6 +13,21 @@ class QorCacheMethodsTest < ActiveSupport::TestCase
     assert_not_equal result1, result3
   end
 
+  test "instance method with qor_cache_key" do
+    product = FactoryGirl.create(:product)
+    cv = FactoryGirl.create(:color_variation)
+    method = 'slow_method'
+
+    result1 = cv.send(method)
+    result2 = cv.send(method)
+
+    product.update_attribute(:updated_at, 1.day.since)
+    result3 = cv.send(method)
+
+    assert_equal result1, result2
+    assert_not_equal result1, result3
+  end
+
   test "instance method should be updated after update" do
     product = FactoryGirl.create(:product)
     method = "slow_method"
@@ -92,5 +107,19 @@ class QorCacheMethodsTest < ActiveSupport::TestCase
     result6 = Product.send(method, Product.all)
     assert_equal result5, result6
     assert_not_equal result1, result6
+  end
+
+  test "class method with qor_cache_key" do
+    product = FactoryGirl.create(:product)
+    method = 'slow_class_method'
+
+    result1 = ColorVariation.send(method)
+    result2 = ColorVariation.send(method)
+
+    product.update_attribute(:updated_at, 1.day.since)
+    result3 = ColorVariation.send(method)
+
+    assert_equal result1, result2
+    assert_not_equal result1, result3
   end
 end

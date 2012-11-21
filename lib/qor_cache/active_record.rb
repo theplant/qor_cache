@@ -43,7 +43,7 @@ module Qor
         end
 
         nodes.map do |node|
-          obj = node.options[:from].inject(self) { |obj, value| obj.send(value) }
+          obj = node.options[:from].inject(self) { |obj, value| obj.try(value) }
           self.send("#{node.name}=", obj)
         end
       end
@@ -58,7 +58,7 @@ module Qor
           fk = self.class.reflections.select {|name, ref| ref.klass == node_model}.first.last.foreign_key
 
           node_method = node.options[:from][-1]
-          updates = {node.name => send(node_method)}
+          updates = {node.name => try(node_method)}
 
           node_model.update_all(updates, ["#{fk} = ?", self.id]) if updates.present?
         end
