@@ -25,6 +25,7 @@ module Qor
               define_method(method) do |*args|
                 _cache_key = Digest::MD5.hexdigest([
                   method,
+                  node.block ? qor_cache_key { node.block.call(self) } : nil,
                   node.data.map {|x| qor_cache_key(x) },
                   cache_key,
                   args.map(&:inspect).join("-")
