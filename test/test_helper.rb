@@ -4,6 +4,9 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 require "rails/test_help"
 
+require File.expand_path("../factories.rb",  __FILE__)
+FactoryGirl.find_definitions
+
 Rails.backtrace_cleaner.remove_silencers!
 
 # Load support files
