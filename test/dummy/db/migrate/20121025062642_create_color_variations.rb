@@ -4,6 +4,7 @@ class CreateColorVariations < ActiveRecord::Migration
       t.string :name
       t.string :code
       t.string :product_code
+      t.integer :product_id
 
       t.timestamps
     end

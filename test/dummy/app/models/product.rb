@@ -1,5 +1,6 @@
 class Product < ActiveRecord::Base
   attr_accessible :code, :name
+  has_many :color_variations
 
   def slow_method
     Time.now.to_i + rand()
