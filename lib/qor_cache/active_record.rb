@@ -7,7 +7,7 @@ module Qor
         base.after_save :_qor_cache_expire
         base.after_destroy :_qor_cache_expire
 
-        base.before_validation :_qor_cache_sync_cached_fields
+        base.before_create :_qor_cache_sync_cached_fields
         base.after_save :_qor_cache_sync_qor_cache_fields
       end
     end
@@ -38,10 +38,30 @@ module Qor
       end
 
       def _qor_cache_sync_cached_fields
-        Qor::Cache::Configuration.deep_find(:cache_field)
+        nodes = Qor::Cache::Configuration.deep_find(:cache_field) do |node|
+          node.parent.is_node?(:scope, self.class.name.demodulize.underscore)
+        end
+
+        nodes.map do |node|
+          obj = node.options[:from].inject(self) { |obj, value| obj.send(value) }
+          self.send("#{node.name}=", obj)
+        end
       end
 
       def _qor_cache_sync_qor_cache_fields
+        nodes = Qor::Cache::Configuration.deep_find(:cache_field) do |node|
+          node.options[:from][-2].to_sym == self.class.name.demodulize.underscore.to_sym
+        end
+
+        nodes.map do |node|
+          node_model = node.parent.name.to_s.classify.constantize
+          fk = self.class.reflections.select {|name, ref| ref.klass == node_model}.first.last.foreign_key
+
+          node_method = node.options[:from][-1]
+          updates = {node.name => send(node_method)}
+
+          node_model.update_all(updates, ["#{fk} = ?", self.id]) if updates.present?
+        end
       end
     end
   end
