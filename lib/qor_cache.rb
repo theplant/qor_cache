@@ -55,7 +55,7 @@ module Qor
               def self.#{method}(*args)
                 _cache_key = Digest::MD5.hexdigest([
                   :#{method},
-                  #{node.data}.map {|x| qor_cache_key(x) },
+                  #{node.data.inspect}.map {|x| qor_cache_key(x) },
                   cache_key,
                   args.map(&:inspect).join("-")
                 ].map(&:to_s).join("-"))

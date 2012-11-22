@@ -9,8 +9,10 @@ module Qor
       end
 
       initializer "qor_cache_init_cache_method", :after => "insert_active_record_methods_for_qor_cache" do
-        Qor::Cache::Base.init_cache_methods
-        Qor::Cache::Base.init_cache_class_methods
+        ActiveSupport.on_load(:after_initialize) do
+          Qor::Cache::Base.init_cache_methods
+          Qor::Cache::Base.init_cache_class_methods
+        end
       end
     end
   end
