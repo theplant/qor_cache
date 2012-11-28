@@ -1,3 +1,5 @@
+require 'qor_dsl'
+
 module Qor
   module Cache
     class Configuration
