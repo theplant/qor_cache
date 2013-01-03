@@ -29,7 +29,7 @@ Qor Cache
       cache_field :product_code, :from => [:product, :code]
     end
 
-    cache_includes "filename", :no_cache => true do |app|
+    cache_includes "filename", :no_cache => true, :expires_in => 5.minutes do |app|
       ...
     end
     cache_includes "filename", "cache_key..."
@@ -61,7 +61,14 @@ Qor Cache
       xxxxx
     end
 
-    qor_cache_includes "filename"
+    render_qor_cache_includes "filename"
+
+## TODO
+
+    Support render :file, :url for render_qor_cache_includes
+      :partial => "filename"
+      :filename => "filename"
+      :url => "http://xxx" -> SSI ? Rewrite ?
 
 ## Contributing
 
