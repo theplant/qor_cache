@@ -7,7 +7,9 @@ module Qor
 
       default_configs ["config/qor/cache.rb"]
 
+      node :cache_includes
       node :cache_key
+
       node :scope do
         node :cache_class_method
         node :cache_method

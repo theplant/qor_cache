@@ -14,4 +14,10 @@ module Kernel
     puts $!
     rand()
   end
+
+  def qor_cache_includes(*names, &blk)
+    # SSI
+    # ESI
+    # ELSE
+  end
 end

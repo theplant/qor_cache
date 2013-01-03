@@ -29,6 +29,11 @@ Qor Cache
       cache_field :product_code, :from => [:product, :code]
     end
 
+    cache_includes "filename", :no_cache => true do |app|
+      ...
+    end
+    cache_includes "filename", "cache_key..."
+
 
     # app/models/color_variation.rb
     def heavy_method_related_to_products
@@ -55,6 +60,8 @@ Qor Cache
     cache qor_cache_key('product') { current_user.role } do
       xxxxx
     end
+
+    qor_cache_includes "filename"
 
 ## Contributing
 
