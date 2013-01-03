@@ -1,6 +1,6 @@
 module Qor
   module Cache
-    class Railtie < Rails::Railtie
+    class Railtie < Rails::Engine
 
       initializer "insert_active_record_methods_for_qor_cache" do
         ActiveSupport.on_load(:active_record) do
