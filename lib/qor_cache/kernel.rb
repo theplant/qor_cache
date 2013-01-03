@@ -1,4 +1,5 @@
 require "digest/md5"
+require 'uri'
 
 module Kernel
   def qor_cache_key(*names, &blk)
@@ -15,9 +16,17 @@ module Kernel
     rand()
   end
 
-  def qor_cache_includes(*names, &blk)
-    # SSI
-    # ESI
-    # ELSE
+  def render_qor_cache_includes(filename)
+    env = respond_to?(request) && request.respond_to?(:env) ? request.env : {}
+    path = URI.parse(filename).path resuce filename
+    key = "/qor_cache_includes/#{filename}"
+    # Qor::Cache::Configuration.deep_find(:cache_includes, path)[0]
+
+    if env['QOR_CACHE_SSI_ENABLED']
+      %Q[<!--# include virtual="#{key}" -->]
+    elsif env['QOR_CACHE_ESI_ENABLED']
+      %Q[<esi:include src="#{key}"/>]
+    else
+    end
   end
 end
