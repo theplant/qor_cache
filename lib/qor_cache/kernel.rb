@@ -19,14 +19,23 @@ module Kernel
   def render_qor_cache_includes(filename)
     env = respond_to?(request) && request.respond_to?(:env) ? request.env : {}
     path = URI.parse(filename).path resuce filename
-    key = "/qor_cache_includes/#{filename}"
-    # Qor::Cache::Configuration.deep_find(:cache_includes, path)[0]
+    node = Qor::Cache::Configuration.deep_find(:cache_includes, path)[0]
 
-    if env['QOR_CACHE_SSI_ENABLED']
-      %Q[<!--# include virtual="#{key}" -->]
-    elsif env['QOR_CACHE_ESI_ENABLED']
-      %Q[<esi:include src="#{key}"/>]
+    if node.nil?
+      raise "qor cache include partial not found!"
     else
+      cache_key = qor_cache_key(*node.data.select {|x| x.is_a? String }, &node.block)
+      key = "/qor_cache_includes/#{filename}?#{cache_key}"
+
+      if env['QOR_CACHE_SSI_ENABLED']
+        %Q[<!--# include virtual="#{key}" -->]
+      elsif env['QOR_CACHE_ESI_ENABLED']
+        %Q[<esi:include src="#{key}"/>]
+      else
+        format = params["format"] || "html"
+        file = Dir[File.join(Rails.root, "app/views/qor_cache_includes", "#{path}.#{format}*")][0]
+        Erubis::Eruby.new(File.read(file)).result(binding)
+      end
     end
   end
 end
