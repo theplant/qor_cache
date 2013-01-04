@@ -12,4 +12,8 @@ class ApplicationController < ActionController::Base
   def expires_in
     render :expires_in
   end
+
+  def products
+    render :products
+  end
 end

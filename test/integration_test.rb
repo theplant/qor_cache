@@ -70,4 +70,35 @@ class IntegrationTest < ActionDispatch::IntegrationTest
     assert_response 200
     assert response.body.include?('2012-10-13')
   end
+
+  test "qor_cache_includes with qor_cache_key" do
+    get "/products"
+    assert_response 200
+    assert response.body.include?('2012-10-10')
+
+    Timecop.freeze("2012-10-11")
+    get "/products"
+    assert_response 200
+    assert response.body.include?('2012-10-10')
+
+    FactoryGirl.create(:product)
+    get "/products"
+    assert_response 200
+    assert response.body.include?('2012-10-11')
+
+    Timecop.freeze("2012-10-12")
+    get "/products"
+    assert_response 200
+    assert response.body.include?('2012-10-11')
+
+    FactoryGirl.create(:color_variation)
+    get "/products"
+    assert_response 200
+    assert response.body.include?('2012-10-12')
+
+    Timecop.freeze("2012-10-13")
+    get "/products"
+    assert_response 200
+    assert response.body.include?('2012-10-12')
+  end
 end
