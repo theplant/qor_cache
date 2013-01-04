@@ -61,7 +61,7 @@ Qor Cache
       xxxxx
     end
 
-    render_qor_cache_includes "filename"
+    qor_cache_includes "filename"
 
 ## TODO
 

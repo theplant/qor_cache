@@ -14,7 +14,7 @@ module Qor
         %Q[<esi:include src="#{key}"/>]
       else
         render_qor_cache_includes(path, key)
-      end
+      end.html_safe
     end
 
     def render_qor_cache_includes(path, cache_key)
