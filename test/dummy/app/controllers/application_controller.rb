@@ -20,4 +20,8 @@ class ApplicationController < ActionController::Base
   def helpers
     render :helpers
   end
+
+  def with_block
+    render :with_block
+  end
 end

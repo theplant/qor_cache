@@ -116,4 +116,20 @@ class IntegrationTest < ActionDispatch::IntegrationTest
     assert_response 200
     assert response.body.include?('2012-10-11')
   end
+
+  test "qor_cache_includes with block" do
+    FactoryGirl.create(:product)
+    get "/with_block", {}, {"CURRENT_USER_ID" => 1}
+    assert_response 200
+    assert response.body.include?('2012-10-10')
+
+    Timecop.freeze("2012-10-11")
+    get "/with_block", {}, {"CURRENT_USER_ID" => 1}
+    assert_response 200
+    assert response.body.include?('2012-10-10')
+
+    get "/with_block", {}, {"CURRENT_USER_ID" => 2}
+    assert_response 200
+    assert response.body.include?('2012-10-11')
+  end
 end

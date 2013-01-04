@@ -1,11 +1,12 @@
 module Qor
   module CacheHelper
-    def qor_cache_includes(filename)
+    def qor_cache_includes(filename, &blk)
       env = respond_to?(:request) && request.respond_to?(:env) ? request.env : {}
       path = URI.parse(filename).path rescue filename
       node = Qor::Cache::Configuration.deep_find(:cache_includes, path)[0]
 
       cache_key = node.nil? ? "" : qor_cache_key(*node.data.select {|x| x.is_a? String }, &node.block)
+      cache_key += qor_cache_key(&blk) if block_given?
       key = "/qor_cache_includes/#{filename}?#{cache_key}"
 
       if env['QOR_CACHE_SSI_ENABLED']
