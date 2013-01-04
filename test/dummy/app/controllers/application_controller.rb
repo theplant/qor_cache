@@ -8,4 +8,8 @@ class ApplicationController < ActionController::Base
   def nocache
     render :nocache
   end
+
+  def expires_in
+    render :expires_in
+  end
 end

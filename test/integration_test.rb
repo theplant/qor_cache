@@ -44,7 +44,7 @@ class IntegrationTest < ActionDispatch::IntegrationTest
     assert response.body.include?('2012-10-11')
   end
 
-  test "no cache includes" do
+  test "qor_cache_includes no_cache option" do
     get "/nocache"
     assert_response 200
     assert response.body.include?('2012-10-10')
@@ -53,5 +53,21 @@ class IntegrationTest < ActionDispatch::IntegrationTest
     get "/nocache"
     assert_response 200
     assert response.body.include?('2012-10-11')
+  end
+
+  test "qor_cache_includes expires_in option" do
+    get "/expires_in"
+    assert_response 200
+    assert response.body.include?('2012-10-10')
+
+    Timecop.freeze("2012-10-11")
+    get "/expires_in"
+    assert_response 200
+    assert response.body.include?('2012-10-10')
+
+    Timecop.freeze("2012-10-13")
+    get "/expires_in"
+    assert_response 200
+    assert response.body.include?('2012-10-13')
   end
 end
