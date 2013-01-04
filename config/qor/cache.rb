@@ -33,3 +33,6 @@ end
 cache_includes "nocache_time", :no_cache => true
 cache_includes "expires_in_time", :expires_in => 2.days
 cache_includes "products_time", "product", "color_variation"
+cache_includes "helper_time" do
+  current_user
+end

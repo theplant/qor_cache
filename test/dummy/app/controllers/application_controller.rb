@@ -16,4 +16,8 @@ class ApplicationController < ActionController::Base
   def products
     render :products
   end
+
+  def helpers
+    render :helpers
+  end
 end
