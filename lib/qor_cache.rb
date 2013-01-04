@@ -1,6 +1,6 @@
 require "qor_cache/configuration"
 require "qor_cache/active_record"
-require "qor_cache/railtie"
+require "qor_cache/engine"
 require "qor_cache/kernel"
 require "digest/md5"
 
