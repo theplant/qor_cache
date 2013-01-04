@@ -4,4 +4,8 @@ class ApplicationController < ActionController::Base
   def index
     render :index
   end
+
+  def nocache
+    render :nocache
+  end
 end

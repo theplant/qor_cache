@@ -18,7 +18,7 @@ module Qor
     end
 
     def render_qor_cache_includes(path, cache_key)
-      options = Qor::Cache::Configuration.first(path).try(:option) || {}
+      options = Qor::Cache::Configuration.first(:cache_includes, path).try(:options) || {}
 
       format = params["format"] || "html" rescue "html"
       file = Dir[File.join(Rails.root, "app/views/qor_cache_includes", "#{path}.#{format}*")][0]

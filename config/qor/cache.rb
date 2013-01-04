@@ -29,3 +29,5 @@ scope :color_variation do
 
   cache_field :product_code, :from => [:product, :code]
 end
+
+cache_includes "nocache_time", :no_cache => true
