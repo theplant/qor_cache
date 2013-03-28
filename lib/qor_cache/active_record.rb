@@ -11,12 +11,12 @@ module Qor
         after_save :_qor_cache_cache_to_external
       end
 
-      # After save, expire caches
+      # after_save: expire caches
       def _qor_cache_expire
         self.class._qor_cache_expire
       end
 
-      # before_create: Cache value from external
+      # before_create: cache value from external
       def _qor_cache_cache_from_external
         nodes = Qor::Cache::Configuration.deep_find(:cache_field) do |node|
           node.parent.is_node?(:scope, self.class.name.demodulize.underscore)
@@ -28,10 +28,9 @@ module Qor
         end
       end
 
-      # after_save: Cache value to external
+      # after_save: cache value to external
       def _qor_cache_cache_to_external
         nodes = Qor::Cache::Configuration.deep_find(:cache_field) do |node|
-          # node.options[:from][-2] -> cache from model
           node.options[:from][-2].to_sym == self.class.name.demodulize.underscore.to_sym
         end
 
