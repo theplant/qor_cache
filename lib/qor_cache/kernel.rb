@@ -13,6 +13,6 @@ module Kernel
     Digest::MD5.hexdigest(results.join("-"))
   rescue
     puts $!
-    rand()
+    rand.to_s
   end
 end
