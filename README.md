@@ -1,10 +1,10 @@
 Qor Cache
 =========
 
-[![Build Status](https://secure.travis-ci.org/qor/qor_cache.png?branch=master)][travis]
-[![Code Climate](https://codeclimate.com/badge.png)][codeclimate]
-[travis]: http://travis-ci.org/qor/qor_cache
-[codeclimate]: https://codeclimate.com/github/qor/qor_cache
+[![Build Status](https://secure.travis-ci.org/qor/qor_cache.png?branch=master)](http://travis-ci.org/qor/qor_cache)
+[![Dependency Status](https://gemnasium.com/qor/qor_cache.png)](https://gemnasium.com/qor/qor_cache)
+[![Code Climate](https://codeclimate.com/github/qor/qor_cache.png)](https://codeclimate.com/github/qor/qor_cache)
+
 
 ## Usage
 
