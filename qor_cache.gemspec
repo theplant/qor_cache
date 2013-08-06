@@ -17,7 +17,6 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  gem.add_dependency "qor_test"
   gem.add_dependency "qor_dsl"
   gem.add_dependency "rails"
   gem.add_development_dependency "sqlite3"
